@@ -24,6 +24,17 @@ $ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.1.jar grep
 $ cat output/*</br>
 
 3.4 vim etc/hadoop/core-site.xml:</br>
+<pre>
+&lt;configuration&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;fs.defaultFS&lt;/name&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;
+&lt;configuration&gt;
+</pre>
+
+
+
 <configuration></br>
     <property></br>
         <name>fs.defaultFS</name></br>
