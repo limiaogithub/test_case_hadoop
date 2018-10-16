@@ -59,6 +59,8 @@ $ cat output/*</br>
   
 
 4.客户端调用需要配置host
+5.可能出现权限问题，可以在服务端设置文件权限
+./hadoop fs -chmod 755 /
   
   
 
