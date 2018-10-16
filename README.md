@@ -27,28 +27,22 @@ $ cat output/*</br>
 <pre>
 &lt;configuration&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;property&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;fs.defaultFS&lt;/name&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;fs.defaultFS&lt;/name&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;
 &lt;configuration&gt;
 </pre>
 
-
-
-<configuration></br>
-    <property></br>
-        <name>fs.defaultFS</name></br>
-        <value>hdfs://localhost:9000</value></br>
-    </property></br>
-</configuration></br>
-
 3.5 vim etc/hadoop/hdfs-site.xml:</br>
-<configuration></br>
-    <property></br>
-        <name>dfs.replication</name></br>
-        <value>1</value></br>
-    </property></br>
-</configuration></br>
+<pre>
+&lt;configuration&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;dfs.replication&lt;/name&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&gt;1&lt;/value&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/property&gt;
+&lt;configuration&gt;
+</pre>
+
 </br>
 3.6 ssh localhost</br>
 3.7</br>
@@ -62,6 +56,9 @@ $ cat output/*</br>
   </br>
 3.10</br>
   bin/hdfs dfs -mkdir /user</br>
+  
+
+4.客户端调用需要配置host
   
   
 
