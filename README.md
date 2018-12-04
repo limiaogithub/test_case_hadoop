@@ -1,7 +1,7 @@
 # test_case_hadoop
 
 准备：
----
+-------
 1.下载hadoop
 ```
 http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz</br>
@@ -16,7 +16,7 @@ http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleClu
 ```
 
 测试 map reduce：
----
+-------
 
 1 设置java环境变量
 ```
@@ -42,7 +42,7 @@ $ cat output/*
 ```
 
 测试 hdfs：
----
+-------
 
 
 1 vim etc/hadoop/core-site.xml:
@@ -92,7 +92,7 @@ bin/hdfs dfs -ls /
 ```
 
 通过程序操作hdfs：
----
+-------
 todo
 ```
 客户端调用需要配置host
