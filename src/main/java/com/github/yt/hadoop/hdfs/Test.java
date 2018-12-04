@@ -1,4 +1,4 @@
-package com.github.yt.hadoop;
+package com.github.yt.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
