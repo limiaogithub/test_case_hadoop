@@ -1,6 +1,5 @@
 # test_case_hadoop
 
----
 准备：
 ---
 1.下载hadoop
