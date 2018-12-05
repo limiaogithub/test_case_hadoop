@@ -2,50 +2,73 @@
 
 准备：
 -------
-1.下载hadoop
+* hadoop
 ```
-http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz</br>
+hadoop-2.9.1.tar.gz
+wget http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.9.1/hadoop-2.9.1.tar.gz
 ```
-2.解压
+* jdk8
 ```
+jdk-8u60-linux-x64.gz
+```
+* 本工程打成jar包
+```
+test_case_hadoop-jar-with-dependencies.jar
+```
+* map reduce输入
+```
+text.txt
+```
+* 其他
+```
+centos6.5+ 
+```
+
+配置：
+-------
+
+* 创建目录
+```
+mkdir /opt/app -p
+```
+
+* 上传tar包到/opt/app、解压
+```
+将hadoop-2.9.1.tar.gz、jdk-8u60-linux-x64.gz、test_case_hadoop-jar-with-dependencies.jar、text.txt上传到/opt/app目录下
+
 tar -xvf hadoop-2.9.1.tar.gz
-```
-3.参照官网
-```
-http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+tar -xvf jdk-8u60-linux-x64.gz
 ```
 
-测试 map reduce：
--------
+* 设置java环境变量、HADOOP_HOME
+```
+配置环境变量
+vim /etc/profile
 
-1 设置java环境变量
-```
-export JAVA_HOME=/usr/java/latest</br>
-```
+在对下面加入
+export JAVA_HOME=/opt/app/jdk1.8.0_60
+export JRE_HOME=/opt/app/jdk1.8.0_60
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
+export HADOOP_HOME=/opt/app/hadoop-2.9.1
 
-2 初始化hadoop环境变量
-```
-etc/hadoop/hadoop-env.sh </br>
-```
-
-3 验证
-```
-bin/hadoop</br>
-```
-
-4 测试 map reduce
-```
-$ mkdir input
-$ cp etc/hadoop/*.xml input
-$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.1.jar grep input output 'dfs[a-z.]+'
-$ cat output/*
+保存后，执行
+source /etc/profile
+java -version
 ```
 
-测试 hdfs：
--------
+* 初始化hadoop环境变量
+```
+chmod 755 -R $HADOOP_HOME
+$HADOOP_HOME/etc/hadoop/hadoop-env.sh 
+```
 
+* 验证
+```
+$HADOOP_HOME/bin/hadoop
+```
 
-1 vim etc/hadoop/core-site.xml:
+* vim $HADOOP_HOME/etc/hadoop/core-site.xml:
 ```
 <configuration>
     <property>
@@ -54,7 +77,7 @@ $ cat output/*
     </property>
 </configuration>
 ```
-2 vim etc/hadoop/hdfs-site.xml:
+* vim $HADOOP_HOME/etc/hadoop/hdfs-site.xml:
 ```
 <configuration>
     <property>
@@ -64,40 +87,49 @@ $ cat output/*
 </configuration>
 ```
 
-3 测试ssh本机
+* 测试ssh本机
 ```
+关闭防火墙
+service iptables stop
+
+（cat /etc/ssh/sshd_config可以关注一下ssh配置文件）
 ssh localhost
 
-$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa</br>
-$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys</br>
-$ chmod 0600 ~/.ssh/authorized_keys</br>
+$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+$ chmod 0600 ~/.ssh/authorized_keys
 ```
 
-4.格式化
+* 格式化
 ```
-$ bin/hdfs namenode -format
-```
-
-5.启动hdfs
-```
-sbin/start-dfs.sh
-
-注：启动时会报找不到JAVA_HOME，我是手动修改了etc/hadoop/hadoop-env.sh 显示生命了JAVA_HOME
+$HADOOP_HOME/bin/hdfs namenode -format
 ```
 
-6 通过命令行创建目录、查询目录
+* 启动hadoop
 ```
-bin/hdfs dfs -mkdir /user</br>
-bin/hdfs dfs -ls /
+手动修改了$HADOOP_HOME/etc/hadoop/hadoop-env.sh 修改JAVA_HOME
+export JAVA_HOME=/opt/app/jdk1.8.0_60
+
+$HADOOP_HOME/sbin/start-all.sh
 ```
 
-通过程序操作hdfs：
+测试：
 -------
-todo
+
+* 通过命令行创建目录、查询目录、添加文件、删除文件
 ```
-客户端调用需要配置host
-可能出现权限问题，可以在服务端设置文件权限
-./hadoop fs -chmod 755 /
-  
+$HADOOP_HOME/bin/hdfs dfs -mkdir -p /user/root/count/in
+$HADOOP_HOME/bin/hdfs dfs -ls /user/root/count
+```
+
+* 测试自定义的map reduce
+```
+将本工程打包，传到$HADOOP_HOME
+在hdfs创建目录/user/root/count/in，
+$HADOOP_HOME/bin/hdfs dfs -mkdir /user/root/count/in
+将text.txt上传到这个目录
+$HADOOP_HOME/bin/hadoop fs -put /opt/app/test.txt /user/root/count/in
+$HADOOP_HOME/bin/hadoop jar /opt/app/test_case_hadoop-jar-with-dependencies.jar
+$HADOOP_HOME/bin/hadoop fs -ls /user/root/count/out
 ```
 
