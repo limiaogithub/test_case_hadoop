@@ -7,20 +7,12 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WordCount {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WordCount.class);
-
     public static void main(String[] args) throws Exception {
-        System.out.println("123");
+
         Configuration configuration = new Configuration();
-//        configuration.set("fs.default.name", "hdfs://localhost:10011");
-////
-////        configuration.set("fs.default.name", "hdfs://limiao1:9000/");
-////        configuration.set("mapred.job.tracker", "localhost:9001");
 
         Job job = Job.getInstance(configuration);
         //指定本次mr job jar包运行主类
